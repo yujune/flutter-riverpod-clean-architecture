@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter_clean_architecture/config/network/chopper_error_convertor.dart';
 import 'package:flutter_clean_architecture/config/network/chopper_interceptor.dart';
