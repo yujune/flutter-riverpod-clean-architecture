@@ -1,8 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/core/hooks/use_search.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AppSearchBar extends StatefulWidget {
+class AppSearchBar extends HookWidget {
   const AppSearchBar({
     super.key,
     required this.onChanged,
@@ -13,48 +13,26 @@ class AppSearchBar extends StatefulWidget {
   final List<String> suggestionList;
 
   @override
-  State<AppSearchBar> createState() => _AppSearchBarState();
-}
-
-class _AppSearchBarState extends State<AppSearchBar> {
-  final _controller = SearchController();
-  Timer? _debounce;
-
-  void _onChanged(String value) {
-    if (_debounce?.isActive == true) {
-      _debounce?.cancel();
-    }
-
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      if (_controller.isOpen) {
-        _controller.closeView(value);
-      }
-
-      widget.onChanged?.call(value);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var (controller, onChangedDebounce) = useSearch(onChanged: onChanged);
+
     return SearchAnchor(
       isFullScreen: false,
       viewConstraints: BoxConstraints.tight(const Size.fromHeight(300)),
-      viewOnChanged: _onChanged,
+      viewOnChanged: onChangedDebounce,
       viewTrailing: const [],
-      searchController: _controller,
+      searchController: controller,
       suggestionsBuilder: (BuildContext context, SearchController controller) {
         return List<Widget>.generate(
-          widget.suggestionList.length,
+          suggestionList.length,
           (int index) {
-            final String item = widget.suggestionList[index];
+            final String item = suggestionList[index];
             return ListTile(
               titleAlignment: ListTileTitleAlignment.center,
               title: Text(item),
               onTap: () {
-                setState(() {
-                  controller.closeView(item);
-                  widget.onChanged?.call(item);
-                });
+                controller.closeView(item);
+                onChangedDebounce.call(item);
               },
             );
           },
@@ -68,7 +46,7 @@ class _AppSearchBarState extends State<AppSearchBar> {
           onTap: () {
             controller.openView();
           },
-          onChanged: _onChanged,
+          onChanged: onChangedDebounce,
           leading: const Icon(Icons.search),
           trailing: const [],
         );
