@@ -42,7 +42,7 @@ final class _$ProductService extends ProductService {
 
   @override
   Future<Response<dynamic>> getProducts(String searchValue) {
-    final Uri $url = Uri.parse('/products/search');
+    final Uri $url = Uri.parse('/products/searchs');
     final Map<String, dynamic> $params = <String, dynamic>{'q': searchValue};
     final Request $request = Request(
       'GET',
