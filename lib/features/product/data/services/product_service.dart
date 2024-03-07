@@ -16,6 +16,6 @@ abstract class ProductService extends ChopperService {
   Future<Response> getCategoryProducts(
       @Path("categoryName") String categoryName);
 
-  @Get(path: "/searchs")
+  @Get(path: "/search")
   Future<Response> getProducts(@Query("q") String searchValue);
 }
