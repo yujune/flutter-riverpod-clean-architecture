@@ -30,6 +30,12 @@ class ProductListController extends _$ProductListController
     ref.invalidateSelf();
   }
 
+  Future<void> addProduct({required String productName}) async {
+    final productRepository = ref.watch(productRepositoryImplProvider);
+    await productRepository.addProduct(productName: productName);
+    ref.invalidateSelf();
+  }
+
   @override
   Future<List<Product>> fetchData(
       {required int limit, required int skip}) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/route/app_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routerConfig: appRoute,
+      builder: EasyLoading.init(),
     );
   }
 }

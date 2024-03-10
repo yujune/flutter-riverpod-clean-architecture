@@ -22,4 +22,7 @@ abstract class ProductService extends ChopperService {
     @Query("limit") int limit = 15,
     @Query("skip") int skip = 0,
   });
+
+  @Post(path: "/add")
+  Future<Response> addProduct({@Body() required String body});
 }

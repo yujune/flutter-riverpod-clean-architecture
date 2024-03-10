@@ -63,4 +63,20 @@ class ProductRepositoryImpl implements ProductRepository {
 
     return null;
   }
+
+  @override
+  Future<Product?> addProduct({required String productName}) async {
+    final result = await productService.addProduct(
+      body: json.encode({
+        "title": productName,
+      }),
+    );
+
+    if (result.isSuccessful) {
+      final value = json.decode(result.bodyString);
+      return Product.fromJson(value);
+    }
+
+    return null;
+  }
 }

@@ -7,4 +7,5 @@ abstract class ProductRepository {
       {required String categoryName});
   Future<PaginatedResponse<Product>?> getProducts(
       {required String productName});
+  Future<Product?> addProduct({required String productName});
 }
