@@ -45,9 +45,16 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<PaginatedResponse<Product>?> getProducts(
-      {required String productName}) async {
-    final result = await productService.getProducts(productName);
+  Future<PaginatedResponse<Product>?> getProducts({
+    required String productName,
+    int limit = 15,
+    int skip = 0,
+  }) async {
+    final result = await productService.getProducts(
+      searchValue: productName,
+      limit: limit,
+      skip: skip,
+    );
 
     if (result.isSuccessful) {
       final value = json.decode(result.bodyString);
